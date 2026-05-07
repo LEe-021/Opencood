@@ -372,7 +372,7 @@ class BaseDataset(Dataset):
 
         # the data is 10 hz for both opv2v and v2x-set
         # todo: it may not be true for other dataset like DAIR-V2X and V2X-Sim
-        time_delay = time_delay // 100
+        time_delay = time_delay // 50
         return time_delay if self.async_flag else 0
 
     def add_loc_noise(self, pose, xyz_std, ryp_std):

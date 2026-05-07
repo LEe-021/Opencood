@@ -1,11 +1,23 @@
 name: point_pillar_early_fusion
-root_dir: "opv2v_data_dumping/train"
-validate_dir: "opv2v_data_dumping/validate"
+root_dir: "pcPredict_data/train_cs_pro_clean"
+validate_dir: "pcPredict_data/val_cs_pro_clean"
+
+wild_setting:
+  async: true
+  async_mode: 'sim'
+  async_overhead: 0
+  seed: 25
+  loc_err: false
+  xyz_std: 0.2
+  ryp_std: 0.2
+  data_size: 1.06 # Mb!!
+  transmission_speed: 27 # Mbps!!
+  backbone_delay: 10 # ms
 
 yaml_parser: "load_point_pillar_params"
 train_params:
   batch_size: &batch_size 2
-  epoches: 15
+  epoches: 70
   eval_freq: 1
   save_freq: 1
 
@@ -85,7 +97,7 @@ loss:
 
 optimizer:
   core_method: Adam
-  lr: 0.002
+  lr: 0.001
   args:
     eps: 1e-10
     weight_decay: 1e-4
@@ -93,5 +105,5 @@ optimizer:
 lr_scheduler:
   core_method: multistep #step, multistep and Exponential support
   gamma: 0.1
-  step_size: [10, 15]
+  step_size: [15, 50]
 

@@ -99,7 +99,7 @@ class PillarVFE(nn.Module):
         max_num = torch.arange(max_num,
                                dtype=torch.int,
                                device=actual_num.device).view(max_num_shape)
-        paddings_indicator = actual_num.int() > max_num
+        paddings_indicator = actual_num.int() > max_num   #######???
         return paddings_indicator
 
     def forward(self, batch_dict):
@@ -118,12 +118,12 @@ class PillarVFE(nn.Module):
                     1) * self.voxel_x + self.x_offset)
         f_center[:, :, 1] = voxel_features[:, :, 1] - (
                 coords[:, 2].to(voxel_features.dtype).unsqueeze(
-                    1) * self.voxel_y + self.y_offset)
+                    1) * self.voxel_y + self.y_offset)    ###########?
         f_center[:, :, 2] = voxel_features[:, :, 2] - (
                 coords[:, 1].to(voxel_features.dtype).unsqueeze(
                     1) * self.voxel_z + self.z_offset)
 
-        if self.use_absolute_xyz:
+        if self.use_absolute_xyz:     ##########?
             features = [voxel_features, f_cluster, f_center]
         else:
             features = [voxel_features[..., 3:], f_cluster, f_center]
@@ -131,7 +131,7 @@ class PillarVFE(nn.Module):
         if self.with_distance:
             points_dist = torch.norm(voxel_features[:, :, :3], 2, 2,
                                      keepdim=True)
-            features.append(points_dist)
+            features.append(points_dist)    ###
         features = torch.cat(features, dim=-1)
 
         voxel_count = features.shape[1]

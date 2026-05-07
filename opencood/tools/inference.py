@@ -2,6 +2,7 @@
 # Author: Runsheng Xu <rxx3386@ucla.edu>, Hao Xiang <haxiang@g.ucla.edu>, Yifan Lu <yifan_lu@sjtu.edu.cn>
 # License: TDG-Attribution-NonCommercial-NoDistrib
 
+#记得确认数据存入时的frame_id
 
 import argparse
 import os
@@ -18,6 +19,9 @@ from opencood.data_utils.datasets import build_dataset
 from opencood.utils import eval_utils
 from opencood.visualization import vis_utils
 import matplotlib.pyplot as plt
+
+import json
+import numpy as np
 
 
 def test_parser():
@@ -59,7 +63,7 @@ def main():
     print(f"{len(opencood_dataset)} samples found.")
     data_loader = DataLoader(opencood_dataset,
                              batch_size=1,
-                             num_workers=16,
+                             num_workers=1,
                              collate_fn=opencood_dataset.collate_batch_test,
                              shuffle=False,
                              pin_memory=False,
@@ -100,8 +104,11 @@ def main():
             vis_aabbs_gt.append(o3d.geometry.LineSet())
             vis_aabbs_pred.append(o3d.geometry.LineSet())
 
+    full_frame_analysis = {} # 初始化存储字典
+    # import glob
+    # path_list = sorted(glob.glob("opv2v_data_dumping/test_culver_city/2021_08_22_09_08_29/5933/*.pcd"))
     for i, batch_data in tqdm(enumerate(data_loader)):
-        # print(i)
+        # print(path_list[i])
         with torch.no_grad():
             batch_data = train_utils.to_device(batch_data, device)
             if opt.fusion_method == 'late':
@@ -123,6 +130,89 @@ def main():
                 raise NotImplementedError('Only early, late and intermediate'
                                           'fusion is supported.')
 
+            
+            # 【终极兼容版】自适应形状保存 (支持 7参数 或 8角点)
+            # ==========================================
+            
+            # --- 1. 处理预测结果 (Predictions) ---
+            if pred_box_tensor is not None and pred_box_tensor.numel() > 0:
+                cur_preds = pred_box_tensor.detach().cpu().numpy() # e.g. [1, 9, 8, 3] 或 [1, 9, 7]
+                cur_scores = pred_score.detach().cpu().numpy()     # e.g. [1, 9]
+                
+                # 智能去 Batch 维度：如果第一维是 1，且后面还有数据，就去掉第一维
+                # 比如 [1, 9, 8, 3] -> [9, 8, 3]
+                # 比如 [1, 5, 7] -> [5, 7]
+                if cur_preds.shape[0] == 1 and cur_preds.ndim > 1:
+                    cur_preds = cur_preds[0]
+                    cur_scores = cur_scores[0]
+                
+                # 再次检查 score 是否变成了标量 (当只有1个物体时)
+                cur_scores = np.atleast_1d(cur_scores)
+                # 如果 box 变成了 [8, 3] 或 [7] (只有1个物体)，需要加回一个维度变成 [1, 8, 3] 或 [1, 7]
+                # 判断标准：pred 的第0维长度应该等于 scores 的长度
+                if len(cur_preds) != len(cur_scores):
+                    # 说明被降维了，强制加一个维度
+                    cur_preds = np.expand_dims(cur_preds, axis=0)
+
+            else:
+                cur_preds = np.array([])
+                cur_scores = np.array([])
+
+            # --- 2. 处理真值 (Ground Truth) ---
+            if gt_box_tensor is not None and gt_box_tensor.numel() > 0:
+                cur_gts = gt_box_tensor.detach().cpu().numpy()
+                if cur_gts.shape[0] == 1 and cur_gts.ndim > 1:
+                    cur_gts = cur_gts[0]
+                
+                # 同样检查单物体降维问题
+                if cur_gts.ndim == 1 or (cur_gts.ndim == 2 and cur_gts.shape[1] == 3): 
+                     # 这里的逻辑比较灵活，主要看是否和预期的 N 一致，简单起见：
+                     if cur_gts.ndim == 1: cur_gts = np.expand_dims(cur_gts, axis=0)
+            else:
+                cur_gts = np.array([])
+
+            # --- 3. 过滤 GT Padding (全0行) ---
+            # 兼容 [N, 7] 和 [N, 8, 3] 的全0判断
+            if cur_gts.size > 0:
+                # 展平后判断每一行是否全为0
+                # reshape(N, -1) 把 [N, 8, 3] 变成 [N, 24]，把 [N, 7] 变成 [N, 7]
+                cur_gts_flat = cur_gts.reshape(cur_gts.shape[0], -1)
+                valid_gt_mask = np.any(cur_gts_flat != 0, axis=1)
+                valid_gts = cur_gts[valid_gt_mask]
+            else:
+                valid_gts = np.array([])
+
+            # --- 4. 数据存入字典 ---
+            frame_record = {
+                "frame_id": i+169,
+                "preds": [], 
+                "gts": []    
+            }
+
+            def to_list(arr): return arr.tolist()
+
+            # 保存预测框
+            if len(cur_preds) > 0:
+                # 确保两个数组长度对齐，取最小值防止溢出
+                num_preds = min(len(cur_preds), len(cur_scores))
+                for p_idx in range(num_preds):
+                    frame_record["preds"].append({
+                        "box": to_list(cur_preds[p_idx]), 
+                        "score": float(cur_scores[p_idx]) 
+                    })
+
+            # 保存真值框
+            if len(valid_gts) > 0:
+                for gt_idx in range(len(valid_gts)):
+                    frame_record["gts"].append({
+                        "box": to_list(valid_gts[gt_idx])
+                    })
+            
+            full_frame_analysis[i] = frame_record
+            
+            # ==========================================
+            
+            
             eval_utils.caluclate_tp_fp(pred_box_tensor,
                                        pred_score,
                                        gt_box_tensor,
@@ -202,6 +292,14 @@ def main():
                                   opt.global_sort_detections)
     if opt.show_sequence:
         vis.destroy_window()
+
+    
+    # Save the detailed analysis
+    json_path = os.path.join(opt.model_dir, 'raw_detection_results.json')
+    with open(json_path, 'w') as f:
+        json.dump(full_frame_analysis, f, indent=4)
+    print(f"原始检测数据已保存至: {json_path}")
+    
 
 
 if __name__ == '__main__':

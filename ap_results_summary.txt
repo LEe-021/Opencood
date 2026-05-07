@@ -1,0 +1,122 @@
+========== 自动化评估结果汇总 ==========
+
+【测试组: CV_50ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CV_predict/test_1_compensated_50ms
+设置时延: 50 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: CV_100ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CV_predict/test_1_compensated_100ms
+设置时延: 100 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: CV_150ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CV_predict/test_1_compensated_150ms
+设置时延: 150 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.82
+--------------------------------------------------
+【测试组: CV_200ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CV_predict/test_1_compensated_200ms
+设置时延: 200 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.81
+--------------------------------------------------
+【测试组: CV_250ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CV_predict/test_1_compensated_250ms
+设置时延: 250 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.91, The Average Precision at IOU 0.7 is 0.79
+--------------------------------------------------
+【测试组: CV_300ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CV_predict/test_1_compensated_300ms
+设置时延: 300 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.90, The Average Precision at IOU 0.7 is 0.77
+--------------------------------------------------
+【测试组: CTRV_50ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRV_predict/test_1_compensated_50ms
+设置时延: 50 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: CTRV_100ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRV_predict/test_1_compensated_100ms
+设置时延: 100 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: CTRV_150ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRV_predict/test_1_compensated_150ms
+设置时延: 150 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.83
+--------------------------------------------------
+【测试组: CTRV_200ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRV_predict/test_1_compensated_200ms
+设置时延: 200 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.82
+--------------------------------------------------
+【测试组: CTRV_250ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRV_predict/test_1_compensated_250ms
+设置时延: 250 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.91, The Average Precision at IOU 0.7 is 0.81
+--------------------------------------------------
+【测试组: CTRV_300ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRV_predict/test_1_compensated_300ms
+设置时延: 300 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.91, The Average Precision at IOU 0.7 is 0.80
+--------------------------------------------------
+【测试组: CTRA_50ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRA_predict/test_1_compensated_50ms
+设置时延: 50 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: CTRA_100ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRA_predict/test_1_compensated_100ms
+设置时延: 100 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: CTRA_150ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRA_predict/test_1_compensated_150ms
+设置时延: 150 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.83
+--------------------------------------------------
+【测试组: CTRA_200ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRA_predict/test_1_compensated_200ms
+设置时延: 200 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.83
+--------------------------------------------------
+【测试组: CTRA_250ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRA_predict/test_1_compensated_250ms
+设置时延: 250 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.81
+--------------------------------------------------
+【测试组: CTRA_300ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/CTRA_predict/test_1_compensated_300ms
+设置时延: 300 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.91, The Average Precision at IOU 0.7 is 0.80
+--------------------------------------------------
+【测试组: IMM_50ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_50ms
+设置时延: 50 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: IMM_100ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_100ms
+设置时延: 100 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.84
+--------------------------------------------------
+【测试组: IMM_150ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_150ms
+设置时延: 150 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.83
+--------------------------------------------------
+【测试组: IMM_200ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_200ms
+设置时延: 200 ms
+检测结果: The Average Precision at IOU 0.3 is 0.94, The Average Precision at IOU 0.5 is 0.92, The Average Precision at IOU 0.7 is 0.83
+--------------------------------------------------
+【测试组: IMM_250ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_250ms
+设置时延: 250 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.91, The Average Precision at IOU 0.7 is 0.81
+--------------------------------------------------
+【测试组: IMM_300ms】
+验证集目录: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_300ms
+设置时延: 300 ms
+检测结果: The Average Precision at IOU 0.3 is 0.93, The Average Precision at IOU 0.5 is 0.91, The Average Precision at IOU 0.7 is 0.80
+--------------------------------------------------

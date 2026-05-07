@@ -113,7 +113,7 @@ class AttBEVBackbone(nn.Module):
 
     def forward(self, data_dict):
         spatial_features = data_dict['spatial_features']
-        record_len = data_dict['record_len']
+        record_len = data_dict['record_len']   ##
 
         ups = []
         ret_dict = {}
@@ -134,12 +134,12 @@ class AttBEVBackbone(nn.Module):
                 ups.append(x_fuse)
 
         if len(ups) > 1:
-            x = torch.cat(ups, dim=1)
+            x = torch.cat(ups, dim=1)   #dim=1?
         elif len(ups) == 1:
             x = ups[0]
 
         if len(self.deblocks) > len(self.blocks):
-            x = self.deblocks[-1](x)
+            x = self.deblocks[-1](x)    ####?
 
         data_dict['spatial_features_2d'] = x
         return data_dict

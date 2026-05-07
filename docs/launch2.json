@@ -1,0 +1,75 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "train",
+            "type": "debugpy",
+            // "cwd": "~/liujunshan/OpenCOOD",
+            "request": "launch",
+            "program": "opencood/tools/train.py",
+            "console": "integratedTerminal",
+            "args": ["--hypes_yaml", "opencood/hypes_yaml/point_pillar_intermediate_fusion.yaml"]
+            // "justMyCode":false
+        },
+        {
+            "name": "inference_pointpillars_late",
+            "type": "debugpy",
+            // "cwd": "~/liujunshan/OpenCOOD",
+            "request": "launch",
+            "program": "opencood/tools/inference.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model_dir", "model/pointpillar_late_fusion",
+                "--fusion_method", "late"
+            ]
+        },
+        {
+            "name": "inference_second_late",
+            "type": "debugpy",
+            // "cwd": "~/liujunshan/OpenCOOD",
+            "request": "launch",
+            "program": "opencood/tools/inference.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model_dir", "model/second_late_fusion",
+                "--fusion_method", "late"
+            ]
+        },
+        {
+            "name": "inference_pointpillar_early",
+            "type": "debugpy",
+            // "cwd": "~/liujunshan/OpenCOOD",
+            "request": "launch",
+            "program": "opencood/tools/inference.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model_dir", "model/pointpillar_early_fusion",
+                "--fusion_method", "early"
+            ]
+        },
+        {
+            "name": "vis",
+            "type": "debugpy",
+            // "cwd": "~/liujunshan/OpenCOOD",
+            "request": "launch",
+            "program": "opencood/visualization/vis_data_sequence.py",
+            "console": "integratedTerminal",
+            "args": []
+        },
+        {
+            "name": "inference_pointpillar_attentive",
+            "type": "debugpy",
+            // "cwd": "~/liujunshan/OpenCOOD",
+            "request": "launch",
+            "program": "opencood/tools/inference.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model_dir", "model/pointpillar_attentive_fusion/pointpillar_attentive_fusion",
+                "--fusion_method", "intermediate"
+            ]
+        }
+    ]
+}

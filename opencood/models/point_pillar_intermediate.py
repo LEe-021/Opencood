@@ -51,6 +51,6 @@ class PointPillarIntermediate(nn.Module):
         rm = self.reg_head(spatial_features_2d)
 
         output_dict = {'psm': psm,
-                       'rm': rm}
+                       'rm': rm}   ####3?
 
         return output_dict

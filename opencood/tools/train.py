@@ -6,6 +6,7 @@
 import argparse
 import os
 import statistics
+import math
 
 import torch
 import tqdm
@@ -156,7 +157,7 @@ def main():
                 # first argument is always your output dictionary,
                 # second argument is always your label dictionary.
                 final_loss = criterion(ouput_dict,
-                                       batch_data['ego']['label_dict'])
+                                       batch_data['ego']['label_dict'])# label_dict?
             else:
                 with torch.cuda.amp.autocast():
                     ouput_dict = model(batch_data['ego'])
@@ -194,7 +195,13 @@ def main():
 
                     final_loss = criterion(ouput_dict,
                                            batch_data['ego']['label_dict'])
-                    valid_ave_loss.append(final_loss.item())
+                    
+                    loss_value = final_loss.item()
+                    if not math.isfinite(loss_value) or loss_value > 1e3:
+                        print(f"Warning: abnormal loss {loss_value} at batch {i}")
+                        continue
+                    valid_ave_loss.append(loss_value)
+
             valid_ave_loss = statistics.mean(valid_ave_loss)
             print('At epoch %d, the validation loss is %f' % (epoch,
                                                               valid_ave_loss))

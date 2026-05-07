@@ -138,3 +138,15 @@ opv2v_data_dumping
 checkpoints
 DCOS.md
 spconv/
+
+# 忽略模型权重文件
+*.pth
+
+# 忽略数据文件
+*.npy
+*.pcd
+
+# 如果你的生成结果都保存在特定的文件夹下（比如 outputs 或 results 文件夹），强烈建议直接忽略整个文件夹：
+pcPredict_data/
+prediction/paper
+prediction/paper_review
