@@ -16,7 +16,7 @@ class PointPillar(nn.Module):
     def __init__(self, args):
         super(PointPillar, self).__init__()
 
-        # PIllar VFE
+        # Pillar VFE
         self.pillar_vfe = PillarVFE(args['pillar_vfe'],
                                     num_point_features=4,
                                     voxel_size=args['voxel_size'],

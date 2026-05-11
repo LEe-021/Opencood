@@ -13,13 +13,13 @@ import shutil
 INPUT_PC_ROOT = "/home/step/data/pcPredict_data/cross_fullcar_clean/scene/test_1/-1"
 
 # 2. 预测结果 JSON 路径
-PRED_JSON_PATH = "/home/step/data/pcPredict_data/cross_fullcar_clean/scene/test_1_noisy/prediction_registry_imm_ukf.json"
+PRED_JSON_PATH = "/home/step/data/pcPredict_data/cross_fullcar_clean/scene_noisy/test_1_noisy/prediction_registry_imm_ukf_improved.json"
 
 # 3. 输出数据根目录 (脚本会自动在下面创建子文件夹)
 #    最终结构:
 #    /output_base/test_1_compensated_100ms/
 #    /output_base/test_1_compensated_200ms/ ...
-OUTPUT_BASE_DIR = "/home/step/data/pcPredict_data/cross_fullcar_clean/IMM_predict"
+OUTPUT_BASE_DIR = "/home/step/data/pcPredict_data/cross_fullcar_clean/IMM_predict_improved_ori"
 
 # 4. 要处理的 Steps 列表
 #    既然间隔是 100ms，那么 [1, 2, 3, 4, 5] 对应 100ms 到 500ms

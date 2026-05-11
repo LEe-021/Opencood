@@ -63,11 +63,12 @@ def main():
     print(f"{len(opencood_dataset)} samples found.")
     data_loader = DataLoader(opencood_dataset,
                              batch_size=1,
-                             num_workers=1,
+                             num_workers=4,
                              collate_fn=opencood_dataset.collate_batch_test,
                              shuffle=False,
-                             pin_memory=False,
-                             drop_last=False)
+                             pin_memory=True,
+                             drop_last=False,
+                             persistent_workers=True)
 
     print('Creating Model')
     model = train_utils.create_model(hypes)
@@ -111,26 +112,27 @@ def main():
         # print(path_list[i])
         with torch.no_grad():
             batch_data = train_utils.to_device(batch_data, device)
-            if opt.fusion_method == 'late':
-                pred_box_tensor, pred_score, gt_box_tensor = \
-                    inference_utils.inference_late_fusion(batch_data,
-                                                          model,
-                                                          opencood_dataset)
-            elif opt.fusion_method == 'early':
-                pred_box_tensor, pred_score, gt_box_tensor = \
-                    inference_utils.inference_early_fusion(batch_data,
-                                                           model,
-                                                           opencood_dataset)
-            elif opt.fusion_method == 'intermediate':
-                pred_box_tensor, pred_score, gt_box_tensor = \
-                    inference_utils.inference_intermediate_fusion(batch_data,
-                                                                  model,
-                                                                  opencood_dataset)
-            else:
-                raise NotImplementedError('Only early, late and intermediate'
-                                          'fusion is supported.')
+            with torch.cuda.amp.autocast(enabled=torch.cuda.is_available()):
+                if opt.fusion_method == 'late':
+                    pred_box_tensor, pred_score, gt_box_tensor = \
+                        inference_utils.inference_late_fusion(batch_data,
+                                                              model,
+                                                              opencood_dataset)
+                elif opt.fusion_method == 'early':
+                    pred_box_tensor, pred_score, gt_box_tensor = \
+                        inference_utils.inference_early_fusion(batch_data,
+                                                               model,
+                                                               opencood_dataset)
+                elif opt.fusion_method == 'intermediate':
+                    pred_box_tensor, pred_score, gt_box_tensor = \
+                        inference_utils.inference_intermediate_fusion(batch_data,
+                                                                      model,
+                                                                      opencood_dataset)
+                else:
+                    raise NotImplementedError('Only early, late and intermediate'
+                                              'fusion is supported.')
 
-            
+            '''
             # 【终极兼容版】自适应形状保存 (支持 7参数 或 8角点)
             # ==========================================
             
@@ -211,7 +213,7 @@ def main():
             full_frame_analysis[i] = frame_record
             
             # ==========================================
-            
+            '''
             
             eval_utils.caluclate_tp_fp(pred_box_tensor,
                                        pred_score,
@@ -295,10 +297,10 @@ def main():
 
     
     # Save the detailed analysis
-    json_path = os.path.join(opt.model_dir, 'raw_detection_results.json')
-    with open(json_path, 'w') as f:
-        json.dump(full_frame_analysis, f, indent=4)
-    print(f"原始检测数据已保存至: {json_path}")
+    #json_path = os.path.join(opt.model_dir, 'raw_detection_results.json')
+    #with open(json_path, 'w') as f:
+    #    json.dump(full_frame_analysis, f, indent=4)
+    #print(f"原始检测数据已保存至: {json_path}")
     
 
 

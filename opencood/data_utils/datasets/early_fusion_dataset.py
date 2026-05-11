@@ -179,6 +179,7 @@ class EarlyFusionDataset(basedataset.BaseDataset):
         lidar_np = shuffle_points(lidar_np)
         # remove points that hit itself
         lidar_np = mask_ego_points(lidar_np)
+
         # project the lidar to ego space
         lidar_np[:, :3] = \
             box_utils.project_points_by_matrix_torch(lidar_np[:, :3],

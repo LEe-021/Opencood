@@ -142,11 +142,11 @@ train_params:
   epoches: 70
   eval_freq: 1
   save_freq: 1
-validate_dir: pcPredict_data/cross_fullcar_clean/IMM_predict/test_1_compensated_150ms
+validate_dir: pcPredict_data/cross_fullcar_clean/IMM_predict_improved/test_1_compensated_300ms
 wild_setting:
   async: true
   async_mode: sim
-  async_overhead: 150
+  async_overhead: 300
   backbone_delay: 10
   data_size: 1.06
   loc_err: false

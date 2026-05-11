@@ -34,6 +34,12 @@ def inference_late_fusion(batch_data, model, dataset):
     for cav_id, cav_content in batch_data.items():
         output_dict[cav_id] = model(cav_content)
 
+    # AMP autocast 可能将输出转为 fp16，后处理需要 fp32
+    for cav_id in output_dict:
+        for key, val in output_dict[cav_id].items():
+            if isinstance(val, torch.Tensor) and val.is_floating_point():
+                output_dict[cav_id][key] = val.float()
+
     pred_box_tensor, pred_score, gt_box_tensor = \
         dataset.post_process(batch_data,
                              output_dict)
@@ -62,6 +68,11 @@ def inference_early_fusion(batch_data, model, dataset):
     cav_content = batch_data['ego']
 
     output_dict['ego'] = model(cav_content)
+
+    # AMP autocast 可能将输出转为 fp16，后处理需要 fp32
+    for key, val in output_dict['ego'].items():
+        if isinstance(val, torch.Tensor) and val.is_floating_point():
+            output_dict['ego'][key] = val.float()
 
     pred_box_tensor, pred_score, gt_box_tensor = \
         dataset.post_process(batch_data,

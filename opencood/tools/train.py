@@ -67,15 +67,17 @@ def main():
                                   num_workers=8,
                                   collate_fn=opencood_train_dataset.collate_batch_train,
                                   shuffle=True,
-                                  pin_memory=False,
-                                  drop_last=True)
+                                  pin_memory=True,
+                                  drop_last=True,
+                                  persistent_workers=True)
         val_loader = DataLoader(opencood_validate_dataset,
                                 batch_size=hypes['train_params']['batch_size'],
                                 num_workers=8,
                                 collate_fn=opencood_train_dataset.collate_batch_train,
                                 shuffle=False,
-                                pin_memory=False,
-                                drop_last=True)
+                                pin_memory=True,
+                                drop_last=True,
+                                persistent_workers=True)
 
     print('---------------Creating Model------------------')
     model = train_utils.create_model(hypes)
